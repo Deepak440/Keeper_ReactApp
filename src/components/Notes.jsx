@@ -1,16 +1,25 @@
 import React from 'react';
 import DeleteIcon from '@material-ui/icons/Delete';
+import axios from 'axios';
 
 function Notes(props)
 {
-    function  handleClick()
-    {
-        props.deleteNote(props.id);
-    }
     return (<div className = "note">
         <h1> {props.title} </h1>
          <p> {props.content}  </p>
-         <button onClick = {handleClick}> < DeleteIcon /></button>
+         <button onClick = {() => 
+         {
+              axios.delete('http://localhost:5000/delete',
+              {
+                 data : {
+                     title : props.title
+                    }
+              })
+               .then(res => console.log(res.data))
+               .catch(err => console.log(err));
+        
+
+         }}> < DeleteIcon /></button>
     </div>);
 }
 

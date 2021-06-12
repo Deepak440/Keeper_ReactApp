@@ -1,39 +1,56 @@
 import React ,{useState} from 'react';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import axios from 'axios';
 
 
 
 function CreateArea(props)
 {
-    const [noteTitle , setNoteTitle] = useState("");
-    const [noteContent , setNoteContent] = useState("");
+    const [note, setNote] = useState({
+        title : "",
+        Content : ""
+    });
+    
 
-    function HandleInput(event)
+    function HandleChange(event)
     {
-       setNoteTitle(event.target.value);
-       console.log(noteTitle);
-    }  
-
-    function HandleText(event)
-    {
-        setNoteContent(event.target.value);
-    }
+        const {name , value} = event.target;
+       setNote(prevNote => {
+           return {
+               ...prevNote,
+               [name] : value
+           };
+       });
+    
+    } 
     function HandleClick(event)
     {
-        props.onAdd({noteTitle , noteContent});
+        props.onAdd(note);
         event.preventDefault();
-        setNoteTitle("");
-        setNoteContent("");
+        
+
+        axios({
+            method :'post',
+            url : 'http://localhost:5000/add',
+            data : {
+              title : note.title,
+              Content : note.content
+            }
+           
+        }).then(res => console.log(res.data))
+          .catch(err => console.log(err));
+
+       setNote({title : "",
+       content : ""});
+        
 
     }
-
-
     return(
 
         <div className = "CreateArea"> 
             <form action="">
-                <input onChange = {HandleInput} value = {noteTitle} type="text" name="title" placeholder = "Title" />
-                <textarea onChange = {HandleText} value = {noteContent} name="content" placeholder = "Take a note..."  rows="3"></textarea>
+                <input onChange = {HandleChange} value = {note.title} type="text" name="title" placeholder = "Title" />
+                <textarea onChange = {HandleChange} value = {note.content} name="content" placeholder = "Take a note..."  rows="3"></textarea>
                 <button onClick = {HandleClick}> <AddCircleIcon /> </button>
             </form>
 
