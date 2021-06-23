@@ -15,7 +15,7 @@ function Notes(props)
                      title : props.title
                     }
               })
-               .then(res => console.log(res.data))
+               .then(() => console.log("Deleted"))
                .catch(err => console.log(err));
         
 

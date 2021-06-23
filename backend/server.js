@@ -40,7 +40,7 @@ app.get('/' , (req ,res) => {
 //Notes Added
 app.post('/add' , (req ,res) =>{
      
-    console.log(req);
+    
     const noteTitle = req.body.title;
     const noteContent = req.body.Content;
     
@@ -63,7 +63,8 @@ app.delete('/delete' ,(req ,res) => {
     
 })
 
+const PORT = process.env.PORT || 5000;
 
-app.listen(5000 , () => {
-    console.log('Server is running on port : 5000 ');
+app.listen(PORT , () => {
+    console.log('Server is running ');
 })

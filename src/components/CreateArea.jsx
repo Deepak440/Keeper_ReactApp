@@ -37,7 +37,7 @@ function CreateArea(props)
               Content : note.content
             }
            
-        }).then(res => console.log(res.data))
+        }).then(() => console.log("Notes Created"))
           .catch(err => console.log(err));
 
        setNote({title : "",
